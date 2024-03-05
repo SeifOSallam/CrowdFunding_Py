@@ -36,14 +36,16 @@ class UserController:
         if exists:
             self.currentUser = User.initJSON(exists)
             print("Welcome, " + self.currentUser.firstName)
+            return True
         else:
             print("Sorry, user doesn't exist!")
+            return False
 
     def logoutUser(self):
         self.currentUser = None
     
     def viewProjects(self):
-        print(self.currentUser.projects)
+        return self.projectController.viewProjects()
     
     def createProject(self, title, details, target, start, end):
         newProject = {
@@ -57,4 +59,14 @@ class UserController:
 
     def deleteProject(self, title):
         self.projectController.deleteProject(self.currentUser, title)
+
+    def editProject(self, index, title, details, target, start, end):
+        newProject = {
+            "Title" : title,
+            "Details" : details,
+            "Target" : target,
+            "Start_Date": start,
+            "End_Date": end
+        }
+        self.projectController.editProject(self.currentUser, index, newProject)
 

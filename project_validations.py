@@ -10,5 +10,12 @@ class ProjectValidator:
                         return True
         
         return False
+    
+    def editIndex(self, fileData, user, index):
+        for fileUser in fileData:
+            if fileUser['Email'] == user.email:
+                if len(fileUser['Projects']) < index:
+                    return False
+                return True
 
 

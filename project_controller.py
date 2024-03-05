@@ -6,12 +6,13 @@ class ProjectController:
         self.fileService = FileService()
         self.projectValidator = ProjectValidator()
 
-    def viewProjects(self, user):
+    def viewProjects(self):
         fileData = self.fileService.getData()
+        allProjects = []
         for userData in fileData:
-            if userData["Email"] == user.email:
-                for project in userData["Projects"]:
-                    print(project)
+            allProjects.append(userData['Projects'])
+        
+        return allProjects
 
     def addProject(self, user, project):
         fileData = self.fileService.getData()
@@ -32,7 +33,7 @@ class ProjectController:
             return
         
         found = False
-        for i in range(0, len(fileData) + 1):
+        for i in range(0, len(fileData)):
             if fileData[i]['Email'] == user.email:
                 for j in range(0, len(fileData[i]['Projects']) + 1):
                     if fileData[i]['Projects'][j]['Title'] == title:
@@ -45,8 +46,12 @@ class ProjectController:
 
     def editProject(self, user, newProjectIndex, newProject):
         fileData = self.fileService.getData()
-        for i in range(0, len(fileData) + 1):
+        if not self.projectValidator.editIndex(fileData, user, newProjectIndex):
+            print('Index out of bounds!')
+            return
+        for i in range(0, len(fileData)):
             if fileData[i]['Email'] == user.email:
                 fileData[i]['Projects'][newProjectIndex] = newProject
+                break
         
         self.fileService.addData(fileData)
