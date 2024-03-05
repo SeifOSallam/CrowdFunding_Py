@@ -42,3 +42,11 @@ class ProjectController:
             if found:
                 break
         self.fileService.addData(fileData)
+
+    def editProject(self, user, newProjectIndex, newProject):
+        fileData = self.fileService.getData()
+        for i in range(0, len(fileData) + 1):
+            if fileData[i]['Email'] == user.email:
+                fileData[i]['Projects'][newProjectIndex] = newProject
+        
+        self.fileService.addData(fileData)
