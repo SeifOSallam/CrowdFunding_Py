@@ -9,13 +9,13 @@ class User:
     
     @classmethod
     def initJSON(self, json):
-        self.firstName = json["First_Name"]
-        self.lastName = json["Last_Name"]
-        self.email = json["Email"]
-        self.password = json["Password"]
-        self.phone = json["Phone"]
-        self.projects = []
-        return self
+        return User(
+            json["First_Name"],
+            json["Last_Name"],
+            json["Email"],
+            json["Password"],
+            json["Phone"]
+        )
     
     def toJson(self):
         return {

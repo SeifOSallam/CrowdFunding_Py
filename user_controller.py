@@ -1,11 +1,13 @@
-from user_model import User
 import json
 import os
+from user_model import User
 from file_service import FileService
+from project_controller import ProjectController
 
 class UserController:
     def __init__(self):
         self.fileService = FileService()
+        self.projectController = ProjectController()
 
     def registerUser(self, firstName, lastName, email, password, confirmPassword, phone):
         if (password != confirmPassword):
@@ -44,5 +46,15 @@ class UserController:
         print(self.currentUser.projects)
     
     def createProject(self, title, details, target, start, end):
-        
+        newProject = {
+            "Title" : title,
+            "Details" : details,
+            "Target" : target,
+            "Start_Date": start,
+            "End_Date": end
+        }
+        self.projectController.addProject(self.currentUser, newProject)
+
+    def deleteProject(self, title):
+        self.projectController.deleteProject(self.currentUser, title)
 

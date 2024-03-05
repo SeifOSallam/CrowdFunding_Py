@@ -8,7 +8,7 @@ class FileService:
         self.filePath = "users.json"
     
     def addData(self, data):
-        with open(self.usersFile, "w") as file:
+        with open(self.filePath, "w") as file:
             json.dump(data, file, indent=4)
 
 
@@ -19,8 +19,8 @@ class FileService:
         else:
             return []
     
-    def addProject(self, user, project):
-        fileData = self.getData()
-        fileUser = User(next(x for x in fileData if user.email == x["Email"]))
-        fileUser.projects.append(project)
+    def getUser(self, user):
+        return self.getData()
+
+    
         
